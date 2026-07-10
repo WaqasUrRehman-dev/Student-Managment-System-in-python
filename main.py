@@ -150,3 +150,5 @@ def menu():
 
 
 menu()
+
+print("Learning Git diff")
