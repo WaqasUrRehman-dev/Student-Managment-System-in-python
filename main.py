@@ -153,4 +153,3 @@ menu()
 
 print("Main Branch Update")
 print("Learning Git diff")
-print("Learning Git Revert")
