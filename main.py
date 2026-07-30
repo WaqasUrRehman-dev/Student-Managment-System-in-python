@@ -1,3 +1,6 @@
+
+students = []
+
 def show_header():
     print("===============================")
     print("Welcome to Student Management System")
@@ -102,18 +105,139 @@ def add_student():
     email = validate_email()
     cnic = validate_cnic()
 
+    student = {
+        "name": name,
+        "age": age,
+        "email": email,
+        "cnic": cnic
+    }
+
+    students.append(student)
+
+    print(f"{name} Student added Successfully")
+
 
 def view_students():
-    pass
+
+    if not students:
+        print("No Student added yet.")
+    else:
+        for i, data in enumerate(students, start=1):
+            print("==============================")
+            print(f"========= Student #{i} =========")
+            print("==============================")
+            print(f"Name : {data['name']}") 
+            print(f"Age : {data['age']}") 
+            print(f"Email : {data['email']}") 
+            print(f"CNIC : {data['cnic']}")
+            print()
 
 def search_student():
-    pass
+    student_found = False
+    if not students:
+        print("No student added yet.")
+    else:
+        user_cnic = validate_cnic()
+        for student in students:
+            if user_cnic == student['cnic']:
+                print(f"Name : {student['name']}")
+                print(f"Age : {student['age']}")
+                print(f"Email : {student['email']}")
+                print(f"CNIC : {student['cnic']}")
+                print()
+                student_found = True
+                break
+        if not student_found:
+            print("No Student Found.")
+            print()
+
 
 def update_student():
-    pass
+    student_found = False
+    if not students:
+        print("No student added yet.")
+    else:
+        user_cnic = validate_cnic()
+        for student in students:
+            if user_cnic == student['cnic']:
+                print(f"Name : {student['name']}")
+                print(f"Age : {student['age']}")
+                print(f"Email : {student['email']}")
+                print(f"CNIC : {student['cnic']}")
+                print()
+
+                print("What do you want to update?")
+                print("1. Name")
+                print("2. Age")
+                print("3. Email")
+                print("4. Cnic")
+
+                option = input("Enter Option: ")
+
+                if option == "1":
+                    update_name = validate_name()
+                    student["name"] = update_name
+                    print("Student Updated Successfully")
+                    student_found = True
+                    break
+                elif option == "2":
+                    update_age = validate_age()
+                    student["age"] = update_age
+                    print("Student Updated Successfully")
+                    student_found = True
+                    break
+                elif option == "3":
+                    update_email = validate_email()
+                    student["email"] = update_email
+                    print("Student Updated Successfully")
+                    student_found = True
+                    break
+                elif option == "4":
+                    update_cnic = validate_cnic()
+                    student["cnic"] = update_cnic
+                    print("Student Updated Successfully")
+                    student_found = True
+                    break
+                else:
+                    print("Invalid Input")
+                    continue
+        if not student_found:
+            print("No Student Found.")
+            print()
+                
 
 def delete_student():
-    pass
+    student_found = False
+    if not students:
+        print("No Student added yet.")
+    else:
+        user_cnic = validate_cnic()
+        for student in students:
+            if user_cnic == student["cnic"]:
+                print(f"Name : {student['name']}")
+                print(f"Age : {student['age']}")
+                print(f"Email : {student['email']}")
+                print(f"Cnic : {student['cnic']}")
+                print()
+
+                print("Are you sure, you want to delete this student")
+                print("1. Yes")
+                print("2. No")
+
+                option = input("Enter Option: ")
+
+                if option == "1":
+                    students.remove(student)
+                    print("Student Deleted Successfully")
+                    student_found = True
+                    break
+                elif option == "2":
+                    print("Deletion Cancelled.")
+                    break
+
+        if not student_found:
+            print("No Student Found.")
+            print()
 
 def exit_app():
     pass
@@ -150,6 +274,3 @@ def menu():
 
 
 menu()
-
-print("Main Branch Update")
-print("Learning Git diff")
