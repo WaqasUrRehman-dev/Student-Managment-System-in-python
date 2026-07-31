@@ -1,3 +1,5 @@
+import json
+import os
 
 students = []
 
@@ -5,6 +7,19 @@ def show_header():
     print("===============================")
     print("Welcome to Student Management System")
     print("===============================")
+
+def load_students():
+    global students
+    if os.path.exists("students.json"):
+        with open("students.json", "r") as file:
+            students = json.load(file)
+    else:
+        students = []
+
+
+def save_students():
+    with open("students.json", "w") as file:
+        json.dump(students,file,indent=4)
 
 def validate_name():
     
@@ -99,11 +114,22 @@ def validate_cnic():
             
             return cnic
 
+def is_duplicate_cnic(cnic):
+    for student in students:
+        if cnic == student['cnic']:
+            return True
+        
+    return False
+
 def add_student():
     name = validate_name()
     age = validate_age()
     email = validate_email()
     cnic = validate_cnic()
+
+    if is_duplicate_cnic(cnic):
+        print("Cnic is Already Exist.")
+        return
 
     student = {
         "name": name,
@@ -113,6 +139,8 @@ def add_student():
     }
 
     students.append(student)
+
+    save_students()
 
     print(f"{name} Student added Successfully")
 
@@ -177,24 +205,28 @@ def update_student():
                 if option == "1":
                     update_name = validate_name()
                     student["name"] = update_name
+                    save_students()
                     print("Student Updated Successfully")
                     student_found = True
                     break
                 elif option == "2":
                     update_age = validate_age()
                     student["age"] = update_age
+                    save_students()
                     print("Student Updated Successfully")
                     student_found = True
                     break
                 elif option == "3":
                     update_email = validate_email()
                     student["email"] = update_email
+                    save_students()
                     print("Student Updated Successfully")
                     student_found = True
                     break
                 elif option == "4":
                     update_cnic = validate_cnic()
                     student["cnic"] = update_cnic
+                    save_students()
                     print("Student Updated Successfully")
                     student_found = True
                     break
@@ -228,6 +260,7 @@ def delete_student():
 
                 if option == "1":
                     students.remove(student)
+                    save_students()
                     print("Student Deleted Successfully")
                     student_found = True
                     break
@@ -244,6 +277,7 @@ def exit_app():
 
 def menu():
 
+    load_students()
     show_header()
     
     while True:
